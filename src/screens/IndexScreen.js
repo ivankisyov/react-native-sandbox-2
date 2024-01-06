@@ -13,6 +13,17 @@ import { useNavigation } from "@react-navigation/native";
 
 const IndexScreen = () => {
   const navigation = useNavigation();
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={() => navigation.navigate("Create")}>
+          <Feather name="plus" size={35} />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
+
   const { state, addBlogPost, deleteBlogPost } = useContext(Context);
 
   return (
