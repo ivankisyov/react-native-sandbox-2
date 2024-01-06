@@ -29,7 +29,6 @@ const IndexScreen = () => {
   return (
     <View>
       <Text>Index Screen</Text>
-      <Button title="Add Post" onPress={addBlogPost} />
       <FlatList
         data={state}
         keyExtractor={(blogPost) => blogPost.title}
@@ -43,9 +42,12 @@ const IndexScreen = () => {
               }
             >
               <View style={styles.row}>
-                <Text style={styles.title}>
-                  {item.title} - {item.id}
-                </Text>
+                <View>
+                  <Text style={styles.title}>
+                    {item.title} - {item.id}
+                  </Text>
+                  <Text>{item.content}</Text>
+                </View>
 
                 <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
                   <Feather name="trash" style={styles.icon} />

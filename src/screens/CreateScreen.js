@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import { View, Text, StyleSheet, TextInput, Button } from "react-native";
 import { Context } from "../context/BlogContext";
+import { useNavigation } from "@react-navigation/native";
 
-const CreateScreen = ({ route }) => {
-  // const { state } = useContext(Context);
-  // const blogPost = state.find((blogPost) => blogPost.id === route.params.id);
+const CreateScreen = () => {
+  const { addBlogPost } = useContext(Context);
+  const navigation = useNavigation();
   const [title, setTitle] = React.useState("");
   const [content, setContent] = React.useState("");
 
@@ -22,7 +23,12 @@ const CreateScreen = ({ route }) => {
         value={content}
         onChangeText={(text) => setContent(text)}
       />
-      <Button title="Add Blog Post" />
+      <Button
+        title="Add Blog Post"
+        onPress={() =>
+          addBlogPost(title, content, () => navigation.navigate("Home"))
+        }
+      />
     </View>
   );
 };
