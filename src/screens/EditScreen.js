@@ -7,7 +7,7 @@ import BlogPostForm from "../components/BlogPostForm";
 const EditScreen = ({ route }) => {
   const { state, editBlogPost } = useContext(Context);
   const navigation = useNavigation();
-  const { title: blogPostTitle, content: blogPostContent } = state.find(
+  const { title: blogPostTitle, body: blogPostContent } = state.find(
     (blogPost) => blogPost.id === route.params.id
   );
 

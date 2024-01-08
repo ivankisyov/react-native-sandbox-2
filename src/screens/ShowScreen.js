@@ -27,8 +27,8 @@ const ShowScreen = ({ route }) => {
 
   return (
     <View>
-      <Text>{blogPost.title}</Text>
-      <Text>{blogPost.content}</Text>
+      <Text style={styles.title}>{blogPost.title}</Text>
+      <Text>{blogPost.body}</Text>
     </View>
   );
 };
@@ -44,6 +44,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
+    fontWeight: "bold",
+    marginVertical: 10,
   },
   icon: {
     fontSize: 24,
