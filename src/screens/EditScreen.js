@@ -2,39 +2,22 @@ import React, { useContext } from "react";
 import { View, Text, StyleSheet, TextInput, Button } from "react-native";
 import { Context } from "../context/BlogContext";
 import { useNavigation } from "@react-navigation/native";
+import BlogPostForm from "../components/BlogPostForm";
 
 const EditScreen = ({ route }) => {
-  const { addBlogPost } = useContext(Context);
+  const { state, editBlogPost } = useContext(Context);
   const navigation = useNavigation();
-  const { state } = useContext(Context);
   const { title: blogPostTitle, content: blogPostContent } = state.find(
     (blogPost) => blogPost.id === route.params.id
   );
-  const [title, setTitle] = React.useState(blogPostTitle);
-  const [content, setContent] = React.useState(blogPostContent);
 
   return (
-    <View>
-      <Text>Edit Post: {route.params.id}</Text>
-      <Text>Enter Title:</Text>
-      <TextInput
-        style={styles.input}
-        value={title}
-        onChangeText={(text) => setTitle(text)}
-      />
-      <Text>Enter Content:</Text>
-      <TextInput
-        style={styles.input}
-        value={content}
-        onChangeText={(text) => setContent(text)}
-      />
-      <Button
-        title="Edit Blog Post"
-        onPress={() =>
-          addBlogPost(title, content, () => navigation.navigate("Home"))
-        }
-      />
-    </View>
+    <BlogPostForm
+      initialValues={{ title: blogPostTitle, content: blogPostContent }}
+      onSubmit={(title, content) => {
+        editBlogPost(route.params.id, title, content, () => navigation.pop());
+      }}
+    />
   );
 };
 
