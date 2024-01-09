@@ -61,16 +61,25 @@ const deleteBlogPost = (dispatch) => {
 };
 
 const editBlogPost = (dispatch) => {
-  return (id, title, content, cb) => {
-    dispatch({
-      type: "edit_blogpost",
-      payload: {
-        id,
-        title,
-        content,
-      },
-    });
-    cb();
+  return async (id, title, content, cb) => {
+    try {
+      const response = await jsonServer.put(`/posts/${id}`);
+      console.log("updated");
+      dispatch({
+        type: "edit_blogpost",
+        payload: {
+          id,
+          title,
+          content,
+          userId: 1,
+        },
+      });
+      console.log("updated");
+      cb();
+    } catch (error) {
+      console.log("error");
+      console.log(error);
+    }
   };
 };
 
