@@ -48,8 +48,15 @@ const addBlogPost = (dispatch) => {
 };
 
 const deleteBlogPost = (dispatch) => {
-  return (id) => {
-    dispatch({ type: "delete_blogpost", payload: id });
+  return async (id) => {
+    try {
+      const response = await jsonServer.delete(`/posts/${id}`);
+      console.log("deleted");
+      dispatch({ type: "delete_blogpost", payload: id });
+    } catch (error) {
+      console.log("error");
+      console.log(error);
+    }
   };
 };
 
