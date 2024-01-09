@@ -6,15 +6,6 @@ const blogReducer = (state, action) => {
   switch (action.type) {
     case "get_blogposts":
       return action.payload;
-    case "add_blogpost":
-      return [
-        ...state,
-        {
-          title: action.payload.title,
-          content: action.payload.content,
-          id: Math.floor(Math.random() * 99999),
-        },
-      ];
     case "delete_blogpost":
       return state.filter((blogPost) => blogPost.id !== action.payload);
     case "edit_blogpost":
@@ -31,6 +22,7 @@ const getBlogPosts = (dispatch) => {
     try {
       const response = await jsonServer.get("/posts");
       dispatch({ type: "get_blogposts", payload: response.data });
+      console.log("get all 200");
     } catch (error) {
       console.log("error");
       console.log(error);
@@ -39,9 +31,19 @@ const getBlogPosts = (dispatch) => {
 };
 
 const addBlogPost = (dispatch) => {
-  return (title, content, cb) => {
-    dispatch({ type: "add_blogpost", payload: { title, content } });
-    cb();
+  return async (title, content, cb) => {
+    try {
+      const response = await jsonServer.post("/posts", {
+        title,
+        body: content,
+        userId: 1,
+      });
+      console.log("created");
+      cb();
+    } catch (error) {
+      console.log("error");
+      console.log(error);
+    }
   };
 };
 

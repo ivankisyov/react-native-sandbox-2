@@ -13,6 +13,8 @@ import { useNavigation } from "@react-navigation/native";
 
 const IndexScreen = () => {
   const navigation = useNavigation();
+  const { state, addBlogPost, deleteBlogPost, getBlogPosts } =
+    useContext(Context);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -24,10 +26,15 @@ const IndexScreen = () => {
     });
   }, [navigation]);
 
-  const { state, addBlogPost, deleteBlogPost, getBlogPosts } =
-    useContext(Context);
   useEffect(() => {
     getBlogPosts();
+    const listener = navigation.addListener("focus", () => {
+      getBlogPosts();
+    });
+
+    return () => {
+      listener.remove();
+    };
   }, []);
 
   return (
